@@ -1,0 +1,49 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: customer-service
+          uri: lb://CUSTOMER-SERVICE
+          predicates:
+            - Path=/api/customer/**
+
+        - id: admin-service
+          uri: lb://ADMIN-SERVICE
+          predicates:
+            - Path=/api/admin/**
+
+        - id: loan-service
+          uri: lb://LOAN-SERVICE
+          predicates:
+            - Path=/api/loan/**
+
+        - id: document-service
+          uri: lb://DOCUMENT-SERVICE
+          predicates:
+            - Path=/app/document/**
+
+        - id: notification-service
+          uri: lb://NOTIFICATION-SERVICE
+          predicates:
+            - Path=/notify/**
+
+        # ── NEW ──────────────────────────────────────────────────────────────
+        - id: credit-check-service
+          uri: lb://CREDIT-CHECK-SERVICE
+          predicates:
+            - Path=/credit/**
+
+jwt:
+  secret: kdjjfkejdshjikoasdfghjklasdfghjkkkkkkldfghjkdfghjk
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
